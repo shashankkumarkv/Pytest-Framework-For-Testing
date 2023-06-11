@@ -4,7 +4,6 @@ from Page_Objects.LoginPage import LoginPage
 
 
 class TestPositiveScenarios:
-
     @pytest.mark.login
     @pytest.mark.parametrize("username, password", [("student", "Password123")])
     def testLogin(self, driver, username, password):

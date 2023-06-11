@@ -6,16 +6,20 @@ from webdriver_manager.firefox import GeckoDriverManager
 import pytest
 
 
-#@pytest.fixture(params=["chrome", "firefox"]) ##for multiple browser
+# @pytest.fixture(params=["chrome", "firefox"]) ##for multiple browser
 @pytest.fixture
 def driver(request):
-    browser = request.config.getoption("--browser") ##for single browser
-    #browser = request.param
+    browser = request.config.getoption("--browser")  ##for single browser
+    # browser = request.param
     print(f"Opening {browser} browser")
     if browser == "chrome":
-        myDriver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        myDriver = webdriver.Chrome(
+            service=ChromeService(ChromeDriverManager().install())
+        )
     elif browser == "firefox":
-        myDriver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+        myDriver = webdriver.Firefox(
+            service=FirefoxService(GeckoDriverManager().install())
+        )
     else:
         raise TypeError(f"expected chrome of firefox got {browser}")
     yield myDriver
@@ -25,5 +29,8 @@ def driver(request):
 
 def pytest_addoption(parser):
     parser.addoption(
-        "--browser", action="store", default="chrome", help="test execute on chrome or firefox"
+        "--browser",
+        action="store",
+        default="chrome",
+        help="test execute on chrome or firefox",
     )
