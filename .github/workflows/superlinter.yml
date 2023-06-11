@@ -1,0 +1,36 @@
+name: Super Linter
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  super_linter:
+    name: Lint code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install Super Linter
+        run: |
+          git clone https://github.com/github/super-linter.git
+          cd super-linter
+          ./install.sh
+
+      - name: Run Super Linter
+        run: |
+          cd super-linter
+          ./run.sh
